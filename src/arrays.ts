@@ -5,15 +5,21 @@
  * the number twice.
  */
 export function bookEndList(numbers: number[]): number[] {
-    return numbers;
+    if (numbers.length === 0) {
+        return [];
+    } else if (numbers.length === 1) {
+        return [numbers[0], numbers[0]];
+    } else {
+        return [numbers[0], numbers[numbers.length - 1]];
+    }
 }
-
 /**
  * Consume an array of numbers, and return a new array where each
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((num: number): number => num * 3);
+    return tripled;
 }
 
 /**
@@ -21,7 +27,10 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const toInt = numbers.map((num: string): number =>
+        /^-?[0-9]+$/.test(num) ? parseInt(num) : 0
+    );
+    return toInt;
 }
 
 /**
@@ -32,7 +41,10 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const removeDollarSign = amounts.map((amount: string): string =>
+        amount[0] === "$" ? amount.replace("$", "") : amount
+    );
+    return stringsToIntegers(removeDollarSign);
 };
 
 /**
@@ -41,7 +53,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const noQuestions = messages.filter(
+        (message: string): boolean => !(message[message.length - 1] === "?")
+    );
+    const addShouts = noQuestions.map((message: string): string =>
+        message[message.length - 1] === "!" ? message.toUpperCase() : message
+    );
+    return addShouts;
 };
 
 /**
@@ -49,7 +67,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const sumCounts = words.filter((word: string): boolean => word.length < 4);
+    return sumCounts.length;
 }
 
 /**
@@ -58,7 +77,14 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length === 0) {
+        return true;
+    }
+    const removeRGB = colors.filter(
+        (word: string): boolean =>
+            word === "red" || word === "blue" || word === "green"
+    );
+    return colors.length === removeRGB.length;
 }
 
 /**
@@ -69,7 +95,14 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    }
+    const sumNum = addends.reduce(
+        (currentTotal: number, num: number) => currentTotal + num,
+        0
+    );
+    return sumNum.toString() + "=" + addends.join("+");
 }
 
 /**
